@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=BPM Tapper
+GenericName=Tempo Calculator
+Comment=Tap-along beats-per-minute calculator
+Exec=python3 @BINDIR@/bpm_tapper.py
+Icon=@ICONDIR@/bpm-tapper.svg
+Terminal=false
+Categories=AudioVideo;Audio;Utility;
+Keywords=bpm;tempo;tap;metronome;beats;
+StartupNotify=true
