@@ -21,7 +21,7 @@ class BPMTapper:
         self.root = root
         self.root.title("BPM Tapper")
         self.root.geometry("420x360")
-        self.root.configure(bg="#1e1e2e")
+        self.root.configure(bg="#090d12")
 
         self.timestamps = []
         self.stable_since = None
@@ -32,10 +32,10 @@ class BPMTapper:
         self._tick()
 
     def _build_ui(self):
-        bg = "#1e1e2e"
-        fg = "#cdd6f4"
-        accent = "#89b4fa"
-        muted = "#6c7086"
+        bg = "#090d12"
+        fg = "#f0f6fc"
+        accent = "#7af0cd"
+        muted = "#6b7a8d"
 
         self.bpm_label = tk.Label(
             self.root, text="--", font=("Helvetica", 72, "bold"),
@@ -65,7 +65,7 @@ class BPMTapper:
         self.tap_button = tk.Button(
             self.root, text="TAP  (or press Space)",
             font=("Helvetica", 14, "bold"),
-            bg="#313244", fg=fg, activebackground="#45475a",
+            bg="#131d2a", fg=fg, activebackground="#1e2d3d",
             activeforeground=fg, relief="flat", bd=0,
             padx=20, pady=14, cursor="hand2",
             command=self.tap,
@@ -109,8 +109,8 @@ class BPMTapper:
         self.timestamps = []
         self.stable_since = None
         self.bpm_history = []
-        self.bpm_label.config(text="--", fg="#89b4fa")
-        self.status_label.config(text="tap to begin", fg="#6c7086")
+        self.bpm_label.config(text="--", fg="#7af0cd")
+        self.status_label.config(text="tap to begin", fg="#6b7a8d")
         self.count_label.config(text="")
 
     def _copy_bpm(self, _event=None):
@@ -124,8 +124,8 @@ class BPMTapper:
         self.root.after(900, lambda: self.count_label.config(text=prev))
 
     def _flash(self):
-        self.tap_button.config(bg="#89b4fa")
-        self.root.after(80, lambda: self.tap_button.config(bg="#313244"))
+        self.tap_button.config(bg="#7af0cd")
+        self.root.after(80, lambda: self.tap_button.config(bg="#131d2a"))
 
     def _intervals(self):
         ts = self.timestamps
@@ -179,35 +179,35 @@ class BPMTapper:
 
         if short_stable or long_stable:
             display_bpm = long_bpm if long_stable else bpm
-            self.status_label.config(text="● steady", fg="#a6e3a1")
+            self.status_label.config(text="● steady", fg="#4ade80")
             rounded = round(display_bpm)
             if abs(display_bpm - rounded) <= SNAP_TOLERANCE:
-                self.bpm_label.config(text=f"{rounded}", fg="#a6e3a1")
+                self.bpm_label.config(text=f"{rounded}", fg="#4ade80")
             else:
-                self.bpm_label.config(text=f"{display_bpm:.1f}", fg="#a6e3a1")
+                self.bpm_label.config(text=f"{display_bpm:.1f}", fg="#4ade80")
         elif self.stable_since is not None:
             held = now - self.stable_since
-            self.status_label.config(text=f"settling… ({held:.1f}s)", fg="#f9e2af")
-            self.bpm_label.config(text=f"{bpm:.1f}", fg="#f9e2af")
+            self.status_label.config(text=f"settling… ({held:.1f}s)", fg="#fbbf24")
+            self.bpm_label.config(text=f"{bpm:.1f}", fg="#fbbf24")
         elif long_span >= LONG_STABLE_WINDOW * 0.5 and long_range <= LONG_STABLE_RANGE * 2:
             self.status_label.config(
                 text=f"holding ±{long_range / 2:.2f}  ({long_span:.0f}/{LONG_STABLE_WINDOW:.0f}s)",
-                fg="#f9e2af",
+                fg="#fbbf24",
             )
-            self.bpm_label.config(text=f"{bpm:.1f}", fg="#f9e2af")
+            self.bpm_label.config(text=f"{bpm:.1f}", fg="#fbbf24")
         elif len(intervals) >= 3:
-            self.status_label.config(text="changing…", fg="#f38ba8")
-            self.bpm_label.config(text=f"{bpm:.1f}", fg="#89b4fa")
+            self.status_label.config(text="changing…", fg="#f87171")
+            self.bpm_label.config(text=f"{bpm:.1f}", fg="#7af0cd")
         else:
-            self.bpm_label.config(text=f"{bpm:.1f}", fg="#89b4fa")
-            self.status_label.config(text="keep tapping…", fg="#6c7086")
+            self.bpm_label.config(text=f"{bpm:.1f}", fg="#7af0cd")
+            self.status_label.config(text="keep tapping…", fg="#6b7a8d")
 
     def _tick(self):
         # auto-clear if user stops tapping
         if self.timestamps:
             idle = time.monotonic() - self.timestamps[-1]
             if idle > RESET_AFTER:
-                self.status_label.config(text="paused", fg="#6c7086")
+                self.status_label.config(text="paused", fg="#6b7a8d")
                 self.stable_since = None
         self.root.after(100, self._tick)
 
