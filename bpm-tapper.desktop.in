@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=BPM Tapper
+Name=nbpm
 GenericName=Tempo Calculator
 Comment=Tap-along beats-per-minute calculator
 Exec=python3 @BINDIR@/bpm_tapper.py
