@@ -1,0 +1,56 @@
+name: Release
+
+# Cut a release by pushing a tag, e.g.  git tag v0.1.1 && git push origin v0.1.1
+# Builds the Linux .deb with `make deb` and attaches it to a GitHub Release.
+# Linux-only by design: a Tk utility installed from source everywhere else.
+# UNSIGNED -- a convenience installer, not store-published. A tag with a
+# pre-release suffix (a hyphen, e.g. -beta.1) publishes as a GitHub prerelease.
+#
+# Architecture is `all` (a Python script), so one runner covers every machine.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04 # broad glibc compat, though `all` barely cares
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax + desktop-entry check
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y desktop-file-utils
+          make check
+
+      # The tag is the source of truth for the packaged version: building with
+      # VERSION taken from the tag means a forgotten `make version` cannot ship
+      # a .deb whose name disagrees with the release it hangs off.
+      #
+      # A pre-release suffix is stripped for the PACKAGE version, matching the
+      # rest of the estate: the tag carries -beta.N, the artifact carries the
+      # plain version (nledger v0.1.1-beta.1 shipped nledger_0.1.1_*). It also
+      # keeps the .deb out of Debian's upstream-revision reading of a hyphen.
+      - name: Build .deb
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${VERSION%%-*}"
+          make deb VERSION="$VERSION"
+          ls -l dist/
+
+      - name: Publish the Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          body: |
+            Automated build — unsigned convenience installer.
+            • Linux: `.deb` (Architecture: all)
+
+            Tk utility; install from source on macOS and Windows.
+          files: dist/*.deb
