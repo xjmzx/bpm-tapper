@@ -15,7 +15,7 @@ MIN_TAPS_FOR_BPM = 2      # need at least 2 taps to show any BPM
 
 # --- Identity ---
 APP_NAME = "BPM tap"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 LONG_STABLE_WINDOW = 20.0 # seconds — if BPM stays in range this long, settle
 LONG_STABLE_RANGE = 1.0   # 10-90 percentile range of BPM samples must be ≤ this
                           # (trims outliers — tolerates the occasional bad tap)

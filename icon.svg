@@ -3,11 +3,12 @@
 <rect x="100" y="100" width="824" height="824" fill="url(#paint0_radial_3511_178)"/>
 </mask>
 <g mask="url(#mask0_3511_178)">
-<rect x="100" y="100" width="824" height="824" rx="185" fill="#2B2B2B"/>
-<rect x="150" y="150" width="724" height="724" rx="185" fill="#4F4F4F"/>
-<rect x="200" y="200" width="624" height="624" rx="185" fill="#878787"/>
-<rect x="250" y="250" width="524" height="524" rx="185" fill="#D9D9D9"/>
-<rect x="300" y="300" width="424" height="424" rx="185" fill="white"/>
+<rect x="100" y="100" width="824" height="824" rx="185" fill="#FFD000"/>
+<rect x="150" y="150" width="724" height="724" rx="185" fill="#FF6F00"/>
+<rect x="200" y="200" width="624" height="624" rx="185" fill="#FF0000"/>
+<rect x="250" y="250" width="524" height="524" rx="185" fill="#AA43FF"/>
+<rect x="300" y="300" width="424" height="424" rx="185" fill="#00AEFF"/>
+<rect x="387" y="387" width="250" height="250" rx="125" fill="#2F0056"/>
 </g>
 <defs>
 <radialGradient id="paint0_radial_3511_178" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 512) rotate(90) scale(412)">

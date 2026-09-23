@@ -5,7 +5,7 @@ ICONDIR ?= $(PREFIX)/share/icons/hicolor/scalable/apps
 
 # Package version. Bumped with every release alongside VERSION in
 # bpm_tapper.py -- two places, both set to the same string as the v* tag.
-VERSION ?= 0.1.0
+VERSION ?= 0.1.1
 MAINTAINER ?= xjmzx <admin@jmzx.uk>
 DIST_DIR := dist
 PKG_NAME := bpm-tapper_$(VERSION)_all
